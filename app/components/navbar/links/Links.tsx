@@ -1,33 +1,47 @@
-import Link from 'next/link'
-import React from 'react'
+import React from "react";
+import Styles from "../navbar.module.css";
+import NavLink from "./navLink/navLink";
 
 const Links = () => {
+  const links = [
+    {
+      title: "HomePage",
+      path: "/",
+    },
+    {
+      title: "About",
+      path: "/about",
+    },
+    {
+      title: "Contact",
+      path: "/contact",
+    },
+    {
+      title: "Blog",
+      path: "/blog",
+    },
+  ];
 
-    const links = [
-        {
-            title: "HomePage",
-            path: "/",
-        },
-        {
-            title: "About",
-            path: "/about",
-        },
-        {
-            title: "Contact",
-            path: "/contact",
-        },
-        {
-            title: "Blog",
-            path: "/blog",
-        },
-    ]
+  // Temporary
+  const session = true;
+  const isAdmin = true;
+
   return (
-    <div>
-        {links.map((link=>(
-            <Link href={link.path} key={link.title}>{link.title}</Link>
-        )))}
-    </div>
-  )
-}
+    <div className={Styles.links}>
+      {links.map((link) => (
+        <NavLink item={link} key={link.title} />
+      ))}
 
-export default Links
+      {session ? (
+        <>
+          {isAdmin && <NavLink item={{ title: "Admin", path: "/admin" }} />}
+          <button className={Styles.logout}>Logout</button>
+        </>
+      ) : (
+        <NavLink item={{ title: "Login", path: "/login" }} />
+      )}
+    </div>
+  );
+};
+
+export default Links;
